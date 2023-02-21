@@ -68,7 +68,7 @@ void AppClass::InitOpenGL(void)
 void AppClass::InitShaders(void)
 {
 	// Use our new fragment shader that supports complimentary colors
-	m_uShaderProgramID = LoadShaders("Shaders//BasicColor.vs", "Shaders//BasicColorInvert.fs");
+	m_uShaderProgramID = LoadShaders("Shaders//BasicColor.vs", "Shaders//E03FragmentShader.fs");
 	glUseProgram(m_uShaderProgramID);
 }
 void AppClass::InitVariables(void)
