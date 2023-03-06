@@ -120,7 +120,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E06.5_Lerp", "Exercises\E06
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HW02_3DPrimitives", "Homework\HW02_3DPrimitives\HW02_3DPrimitives.vcxproj", "{D9011B1F-2B72-427A-8D85-4D1630AB86EC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E05 - Transformations", "Exercises\E05_Transformations\E05 - Transformations.vcxproj", "{9D05E28A-9F4F-4049-A319-471C6B4830E6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E05_Transformations", "Exercises\E05_Transformations\E05 - Transformations.vcxproj", "{9D05E28A-9F4F-4049-A319-471C6B4830E6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E07_Gimbal Removal", "Exercises\E07_Gimbal Removal\E07 - Gimbal Removal.vcxproj", "{EDF1C593-DC8B-4862-9138-C69B48B2B134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -498,6 +500,14 @@ Global
 		{9D05E28A-9F4F-4049-A319-471C6B4830E6}.Release|x64.Build.0 = Release|Win32
 		{9D05E28A-9F4F-4049-A319-471C6B4830E6}.Release|x86.ActiveCfg = Release|Win32
 		{9D05E28A-9F4F-4049-A319-471C6B4830E6}.Release|x86.Build.0 = Release|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Debug|x64.ActiveCfg = Debug|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Debug|x64.Build.0 = Debug|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Debug|x86.ActiveCfg = Debug|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Debug|x86.Build.0 = Debug|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x64.ActiveCfg = Release|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x64.Build.0 = Release|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x86.ActiveCfg = Release|Win32
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -552,6 +562,7 @@ Global
 		{DF3F09F3-5ACC-4C94-8A8B-AE6094458A7C} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 		{D9011B1F-2B72-427A-8D85-4D1630AB86EC} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 		{9D05E28A-9F4F-4049-A319-471C6B4830E6} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
+		{EDF1C593-DC8B-4862-9138-C69B48B2B134} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1308D28-F0EE-436B-AA0D-4CFD1105C92A}

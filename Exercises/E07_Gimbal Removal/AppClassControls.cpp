@@ -55,18 +55,12 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 	case sf::Keyboard::Add:
 		break;
 	case sf::Keyboard::Subtract:
-		m_pEntityMngr->RemoveEntity(-1);
 		break;
 	case sf::Keyboard::Space:
-		m_pEntityMngr->ApplyForce(vector3(0.0f, 1.0f, 0.0f), "Steve");
 		break;
 	case sf::Keyboard::LShift:
 	case sf::Keyboard::RShift:
 		m_bModifier = false;
-		break;
-	case sf::Keyboard::R:
-		m_v3Orientation = vector3(0.0f);
-		m_qOrientation = quaternion();
 		break;
 	}
 
@@ -110,38 +104,55 @@ void Application::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
-#pragma region Character Orientation
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
-		m_v3Orientation.x++;
-		quaternion q1 = glm::angleAxis(glm::radians(1.0f), vector3(1.0f, 0.0f, 0.0f));
-		m_qOrientation = m_qOrientation * q1;
-		//example on how even a quaternion if generated though Euler will have Gimbal Lock
-		//vector3 v3Temp(glm::radians(m_v3Orientation.x), glm::radians(m_v3Orientation.y), glm::radians(m_v3Orientation.z));
-		//m_qOrientation = quaternion(vector3(v3Temp));
+		quaternion rotation;
 
+		if (fMultiplier) {
+			m_v3Rotation.x -= 1.0f;
+			rotation = glm::angleAxis(glm::radians(-1.0f), AXIS_X);
+		}
+		else {
+			m_v3Rotation.x += 1.0f;
+			rotation = glm::angleAxis(glm::radians(1.0f), AXIS_X);
+		}
+
+		m_qOrientation *= rotation;
 	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
 	{
-		m_v3Orientation.y++;
-		quaternion q1 = glm::angleAxis(glm::radians(1.0f), vector3(0.0f, 1.0f, 0.0f));
-		m_qOrientation = m_qOrientation * q1;
-		//example on how even a quaternion if generated though Euler will have Gimbal Lock
-		//vector3 v3Temp(glm::radians(m_v3Orientation.x), glm::radians(m_v3Orientation.y), glm::radians(m_v3Orientation.z));
-		//m_qOrientation = quaternion(vector3(v3Temp));
-	}
+		quaternion rotation;
 
+		if (fMultiplier) {
+			m_v3Rotation.y -= 1.0f;
+			rotation = glm::angleAxis(glm::radians(-1.0f), AXIS_Y);
+		}
+		else {
+			m_v3Rotation.y += 1.0f;
+			rotation = glm::angleAxis(glm::radians(1.0f), AXIS_Y);
+		}
+
+		m_qOrientation *= rotation;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 	{
-		m_v3Orientation.z++;
-		quaternion q1 = glm::angleAxis(glm::radians(1.0f), vector3(0.0f, 0.0f, 1.0f));
-		m_qOrientation = m_qOrientation * q1;
-		//example on how even a quaternion if generated though Euler will have Gimbal Lock
-		//vector3 v3Temp(glm::radians(m_v3Orientation.x), glm::radians(m_v3Orientation.y), glm::radians(m_v3Orientation.z));
-		//m_qOrientation = quaternion(vector3(v3Temp));
+		quaternion rotation;
+
+		if (fMultiplier) {
+			m_v3Rotation.z -= 1.0f;
+			rotation = glm::angleAxis(glm::radians(-1.0f), AXIS_Z);
+		}
+		else {
+			m_v3Rotation.z += 1.0f;
+			rotation = glm::angleAxis(glm::radians(1.0f), AXIS_Z);
+		}
+
+		m_qOrientation *= rotation;
 	}
-#pragma endregion
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		m_v3Rotation = vector3(0.0f);
+	}
 }
 //Mouse
 void Application::ProcessMousePressed(sf::Event a_event)

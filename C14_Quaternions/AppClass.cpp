@@ -66,7 +66,7 @@ void Application::Update(void)
 		m_m4Steve = glm::toMat4(m_qOrientation);
 	}
 #pragma endregion
-	
+
 	//Attach the model matrix that takes me from the world coordinate system
 	m_pModelMngr->AddModelToRenderList(m_pModel, m_m4Steve);
 }
@@ -86,7 +86,7 @@ void Application::Display(void)
 
 	//draw gui
 	DrawGUI();
-	
+
 	//end the current frame (internally swaps the front and back buffers)
 	m_pWindow->display();
 }
