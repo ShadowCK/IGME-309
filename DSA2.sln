@@ -124,6 +124,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E05_Transformations", "Exer
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E07_Gimbal Removal", "Exercises\E07_Gimbal Removal\E07 - Gimbal Removal.vcxproj", "{EDF1C593-DC8B-4862-9138-C69B48B2B134}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HW03_Camera", "Homework\HW03_Camera\HW03_Camera.vcxproj", "{360B85F4-A66A-4A6F-8616-D03B960FB9E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -508,6 +510,14 @@ Global
 		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x64.Build.0 = Release|Win32
 		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x86.ActiveCfg = Release|Win32
 		{EDF1C593-DC8B-4862-9138-C69B48B2B134}.Release|x86.Build.0 = Release|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Debug|x64.ActiveCfg = Debug|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Debug|x64.Build.0 = Debug|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Debug|x86.Build.0 = Debug|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Release|x64.ActiveCfg = Release|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Release|x64.Build.0 = Release|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Release|x86.ActiveCfg = Release|Win32
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -563,6 +573,7 @@ Global
 		{D9011B1F-2B72-427A-8D85-4D1630AB86EC} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 		{9D05E28A-9F4F-4049-A319-471C6B4830E6} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 		{EDF1C593-DC8B-4862-9138-C69B48B2B134} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
+		{360B85F4-A66A-4A6F-8616-D03B960FB9E4} = {1AD44392-48E6-469C-BC46-EF800CD791B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1308D28-F0EE-436B-AA0D-4CFD1105C92A}
