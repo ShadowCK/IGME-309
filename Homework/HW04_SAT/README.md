@@ -1,0 +1,1 @@
+20% Extra credit: all the 15 separation planes are generated in the right way.

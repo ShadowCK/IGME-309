@@ -151,7 +151,7 @@ uint MyRigidBody::SAT(MyRigidBody* const a_pOther)
 bool MyRigidBody::IsColliding(MyRigidBody* const a_pOther)
 {
 	//check if spheres are colliding
-	bool bColliding = SAT(a_pOther);
+	bool bColliding = true;
 	/*
 	* We use Bounding Spheres or ARBB as a pre-test to avoid expensive calculations (SAT)
 	* we default bColliding to true here to always fall in the need of calculating
@@ -161,13 +161,107 @@ bool MyRigidBody::IsColliding(MyRigidBody* const a_pOther)
 	{
 		uint nResult = SAT(a_pOther);
 
-		if (bColliding) //The SAT shown they are colliding
+		if (nResult == BTXs::eSATResults::SAT_NONE) //The SAT shown they are colliding
 		{
 			this->AddCollisionWith(a_pOther);
 			a_pOther->AddCollisionWith(this);
 		}
 		else //they are not colliding
 		{
+			// Plane colors
+			std::vector<vector3> planeColors = {
+				vector3(1, 0, 0), vector3(0, 1, 0), vector3(0, 0, 1),
+				vector3(1, 1, 0), vector3(1, 0, 1), vector3(0, 1, 1),
+				vector3(0.5, 0, 0), vector3(0, 0.5, 0), vector3(0, 0, 0.5),
+				vector3(0.5, 0.5, 0), vector3(0.5, 0, 0.5), vector3(0, 0.5, 0.5),
+				vector3(0.3, 0.5, 0.2), vector3(0.5, 0.2, 0.3), vector3(0.2, 0.3, 0.5)
+			};
+
+			matrix4 mat4;
+			vector3 color = planeColors[nResult - 1]; // result: 1~15 => index: 0~14
+
+			// Compute the mat4 based on the specific case of nResult.
+			vector3 planePosition;
+			vector3 planeNormal;
+			float planeSize = 5.0f; // Adjust the plane size based on your requirements.
+
+			matrix4 m4This = GetModelMatrix();
+			matrix4 m4Other = a_pOther->GetModelMatrix();
+
+			vector3 v3ThisX = vector3(m4This[0]);
+			vector3 v3ThisY = vector3(m4This[1]);
+			vector3 v3ThisZ = vector3(m4This[2]);
+
+			vector3 v3OtherX = vector3(m4Other[0]);
+			vector3 v3OtherY = vector3(m4Other[1]);
+			vector3 v3OtherZ = vector3(m4Other[2]);
+
+			// Compute the plane normal and position based on the separating axis (nResult).
+			switch (nResult)
+			{
+			case BTXs::eSATResults::SAT_AX:
+				planeNormal = v3ThisX;
+				break;
+			case BTXs::eSATResults::SAT_AY:
+				planeNormal = v3ThisY;
+				break;
+			case BTXs::eSATResults::SAT_AZ:
+				planeNormal = v3ThisZ;
+				break;
+			case BTXs::eSATResults::SAT_BX:
+				planeNormal = v3OtherX;
+				break;
+			case BTXs::eSATResults::SAT_BY:
+				planeNormal = v3OtherY;
+				break;
+			case BTXs::eSATResults::SAT_BZ:
+				planeNormal = v3OtherZ;
+				break;
+			case BTXs::eSATResults::SAT_AXxBX:
+				planeNormal = glm::cross(v3ThisX, v3OtherX);
+				break;
+			case BTXs::eSATResults::SAT_AXxBY:
+				planeNormal = glm::cross(v3ThisX, v3OtherY);
+				break;
+			case BTXs::eSATResults::SAT_AXxBZ:
+				planeNormal = glm::cross(v3ThisX, v3OtherZ);
+				break;
+			case BTXs::eSATResults::SAT_AYxBX:
+				planeNormal = glm::cross(v3ThisY, v3OtherX);
+				break;
+			case BTXs::eSATResults::SAT_AYxBY:
+				planeNormal = glm::cross(v3ThisY, v3OtherY);
+				break;
+			case BTXs::eSATResults::SAT_AYxBZ:
+				planeNormal = glm::cross(v3ThisY, v3OtherZ);
+				break;
+			case BTXs::eSATResults::SAT_AZxBX:
+				planeNormal = glm::cross(v3ThisZ, v3OtherX);
+				break;
+			case BTXs::eSATResults::SAT_AZxBY:
+				planeNormal = glm::cross(v3ThisZ, v3OtherY);
+				break;
+			case BTXs::eSATResults::SAT_AZxBZ:
+				planeNormal = glm::cross(v3ThisZ, v3OtherZ);
+				break;
+			default:
+				planeNormal = vector3(0, 0, 1);
+				break;
+			}
+
+			// Compute the average position between the two objects.
+			planePosition = (GetCenterGlobal() + a_pOther->GetCenterGlobal()) * 0.5f;
+			// Compute the mat4 transformation matrix.
+			quaternion qRotation = glm::rotation(vector3(0, 0, 1), planeNormal);
+			mat4 = glm::translate(planePosition) * glm::mat4_cast(qRotation) * glm::scale(vector3(planeSize));
+			// Render the plane
+			m_pModelMngr->AddPlaneToRenderList(mat4, color);
+
+			// Render a copy of the plane with the opposite normal so we can see it on both sides
+			qRotation = glm::rotation(vector3(0, 0, 1), -planeNormal);
+			mat4 = glm::translate(planePosition) * glm::mat4_cast(qRotation) * glm::scale(vector3(planeSize));
+			m_pModelMngr->AddPlaneToRenderList(mat4, color);
+
 			this->RemoveCollisionWith(a_pOther);
 			a_pOther->RemoveCollisionWith(this);
 		}
