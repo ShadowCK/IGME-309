@@ -193,6 +193,7 @@ void MyRigidBody::AddToRenderList(void)
 }
 bool MyRigidBody::IsColliding(MyRigidBody* const other)
 {
+	std::cout << this->m_v3MaxG.x << ", " << this->m_v3MaxG.y << ", " << this->m_v3MaxG.z << std::endl;
 	//check if spheres are colliding
 	bool bColliding = (glm::distance(GetCenterGlobal(), other->GetCenterGlobal()) < m_fRadius + other->m_fRadius);
 	//if they are check the Axis Aligned Bounding Box

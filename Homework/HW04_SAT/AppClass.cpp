@@ -2,21 +2,20 @@
 void Application::InitVariables(void)
 {
 	////Change this to your name and email
-	m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	m_sProgrammer = "Zhao Jin - zj5148@rit.edu";
 	vector3 v3Position(0.0f, 0.0f, 10.0f);
 	vector3 v3Target = ZERO_V3;
 	vector3 v3Upward = AXIS_Y;
 	m_pCameraMngr->SetPositionTargetAndUpward(v3Position, v3Target, v3Upward);
 
-	m_sCreeper = "Minecraft\\Creeper.obj";
-	m_sSteve = "Minecraft\\Steve.obj";
+	m_pModelMngr = ModelManager::GetInstance();
 
 	//creeper
-	m_pModelMngr->LoadModel(m_sCreeper);
+	m_sCreeper = m_pModelMngr->LoadModel("Minecraft\\Creeper.obj");
 	m_pCreeperRB = new MyRigidBody(m_pModelMngr->GetVertexList(m_sCreeper));
 
 	//steve
-	m_pModelMngr->LoadModel(m_sSteve);
+	m_sSteve = m_pModelMngr->LoadModel("Minecraft\\Steve.obj");
 	m_pSteveRB = new MyRigidBody(m_pModelMngr->GetVertexList(m_sSteve));
 }
 void Application::Update(void)
@@ -30,36 +29,30 @@ void Application::Update(void)
 	//Is the first person camera active?
 	CameraRotation();
 
-	//Update Entity Manager
-	m_pEntityMngr->Update();
-
-	//Add objects to render list
-	m_pEntityMngr->AddEntityToRenderList(-1, true);
-
 	//Set model matrix to the creeper
-	m_pModelMngr->AddModelToRenderList(m_sCreeper, glm::translate(m_v3Creeper) * ToMatrix4(m_qArcBall));
-	m_pCreeperRB->SetModelMatrix(glm::translate(m_v3Creeper) * ToMatrix4(m_qArcBall));
-	m_pCreeperRB->AddToRenderList();
-	
+	matrix4 m4Creeper = glm::translate(m_v3Creeper) * ToMatrix4(m_qCreeper) * ToMatrix4(m_qArcBall);
+	m_pCreeperRB->SetModelMatrix(m4Creeper);
+	m_pModelMngr->AddAxisToRenderList(m4Creeper);
+
 	//Set model matrix to Steve
-	m_pModelMngr->AddModelToRenderList(m_sSteve, glm::translate(vector3(1.25f, 0.0f, 0.0f)));
-	m_pSteveRB->SetModelMatrix(glm::translate(vector3(1.25f, 0.0f, 0.0f)));
-	m_pSteveRB->AddToRenderList();
+	matrix4 m4Steve = glm::translate(vector3(2.25f, 0.0f, 0.0f)) * glm::rotate(IDENTITY_M4, glm::radians(-55.0f), AXIS_Z);
+	m_pSteveRB->SetModelMatrix(m4Steve);
+	m_pModelMngr->AddAxisToRenderList(m4Steve);
 
-	//check collision, if they are colliding render it in red
-	if (m_pCreeperRB->IsColliding(m_pSteveRB))
-	{
-		// As the IsColliding method returns a boolean, someting else can be done here, but
-		// nothing is needed for our case.
-	}
+	bool bColliding = m_pCreeperRB->IsColliding(m_pSteveRB);
 
+	m_pModelMngr->AddModelToRenderList(m_sCreeper, m4Creeper);
 	m_pCreeperRB->AddToRenderList();
+
+	m_pModelMngr->AddModelToRenderList(m_sSteve, m4Steve);
 	m_pSteveRB->AddToRenderList();
 }
 void Application::Display(void)
 {
 	// Clear the screen
 	ClearScreen();
+	
+	matrix4 m4Model = ToMatrix4(m_qArcBall);//model matrix
 
 	// draw a skybox
 	m_pModelMngr->AddSkyboxToRenderList();
@@ -78,12 +71,6 @@ void Application::Display(void)
 }
 void Application::Release(void)
 {
-	//release the rigid body for model 1
-	SafeDelete(m_pCreeperRB);
-
-	//release the rigid body for model 2
-	SafeDelete(m_pSteveRB);
-
 	//release GUI
 	ShutdownGUI();
 }
